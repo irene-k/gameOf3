@@ -1,0 +1,30 @@
+.scoober-blue {
+  background-color:#56aad9 !important;
+}
+
+.white {
+  color:#ffffff !important;
+}
+
+.has-padding {
+  padding: 10px 16px !important;
+}
+
+.fixed-ratio {
+  width: 60px;
+  height:60px;
+}
+
+.main{
+  min-height: calc(100vh - 150px);
+}
+
+.footer {
+  height: 70px;
+}
+
+.left-border {
+  color: #56aad9 !important;
+  border-left-color: #56aad9 !important;
+  border-left-width: 4px !important;
+}
