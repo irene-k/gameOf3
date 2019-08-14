@@ -5,7 +5,7 @@ import { combineReducers } from 'redux';
 const initialState = {
     current: Math.floor(Math.random() * 100),
     next:null,
-    history: [],
+    resultHistory: [],
     myTurn: true,
     gameOver: false
 }
@@ -57,8 +57,8 @@ const gameReducer = (state = initialState, action) => {
                 //history: action.history.concat([{
                 //    cells: action.cells
                 //}]),
-                //currentBoard: action.cells,
-                gameOver: false,
+                resultHistory: [...state.resultHistory, state.current],
+                gameOver: false
             };
             break;
         default:

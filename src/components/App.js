@@ -19,10 +19,10 @@ render() {
   return( 
   <div className="ui container">
     <div className="eight wide column centered row scoober-blue">
-      <Header playTurn={{myTurn:true}} />
+      <Header />
     </div>
     <div className="main ui container">
-      <Board  />
+      <Board />
     </div>
     <div className="ui  vertical footer segment">
         <div className="ui center aligned container">

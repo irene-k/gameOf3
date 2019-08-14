@@ -23,8 +23,16 @@
   height: 70px;
 }
 
-.left-border {
+ul{
+  display:block;
+}
+
+.left-border, ui.list .left-border {
   color: #56aad9 !important;
   border-left-color: #56aad9 !important;
   border-left-width: 4px !important;
+  margin-left:16px !important;
+  display: list-item;
+  table-layout: fixed;
+  list-style-type: none;
 }

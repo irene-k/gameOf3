@@ -25,6 +25,8 @@ export const displayTurnMessage = turnmsg => {
     };
 };
 
+// new game will initialize the board : display first number and enable controls
+
 export const newGame = () => {
     return {
         type: 'NEW_GAME'
@@ -37,7 +39,7 @@ export const endGame = () => {
 };
 
 // turn involves current, selectedcontrol and next
-export const playTurn = (current, control, myTurn) => async dispatch => {
+export const playTurn = (current, control, myTurn, resultHistory) => async dispatch => {
     console.log("actions")
     console.log("current" + current)
     console.log('control' + control.addValue);
@@ -48,7 +50,8 @@ export const playTurn = (current, control, myTurn) => async dispatch => {
             control:control,
             current:current,
             next:parseInt((current + control.addValue) /3),
-            myTurn: myTurn
+            myTurn: myTurn,
+            resultHistory:resultHistory
         }
     });
 };
