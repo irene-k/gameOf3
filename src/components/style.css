@@ -16,15 +16,19 @@
 }
 
 .main{
-  min-height: calc(100vh - 150px);
+  min-height: calc(100vh - 200px);
 }
 
 .footer {
   height: 70px;
 }
 
-ul{
+ul .list{
   display:block;
+}
+
+.ui .list{
+  margin: .3571em 0 !important;
 }
 
 .left-border, ui.list .left-border {
@@ -35,4 +39,6 @@ ul{
   display: list-item;
   table-layout: fixed;
   list-style-type: none;
+  width: 60px;
+  text-align: center;
 }

@@ -32,12 +32,6 @@ const gameReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'NEW_GAME':
             return {...state,
-                history:[{
-                    cells: new Array(state.grid).fill(null)
-                }],
-                currentBoard: new Array(state.grid).fill(null),
-                showHistory: false,
-                stepNumber: 0,
                 xTurn: true,
                 gameOver: false
             };

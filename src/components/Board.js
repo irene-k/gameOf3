@@ -9,12 +9,10 @@ const Board = (props) => {
 
     return (
         <div>
-        <div>
-            <div className="ui big basic label left-border">{props.current}</div>    
-        </div>
-        <div className="ui list">
-            {props.resultHistory.map((item, index) => (<div className="item"><div className="ui big basic label left-border" key={index}> {item} </div></div>))}
-        </div>
+            <div className="ui list">
+                {props.resultHistory.map((item, index) => (<div key={index} className="item"><div className="ui big basic label left-border" key={index}> {item} </div></div>))}
+            </div>
+            <div className="ui big basic label left-border">{props.current}</div>
         </div>
     );
 };

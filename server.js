@@ -39,6 +39,7 @@ io.sockets.on("connection", socket => {
   });
 });
 
+/*
 var players = {},
   unmatched;
 
@@ -69,6 +70,8 @@ function joinGame(socket) {
     unmatched = socket.id;
   }
 }
+
+*/
 
 // Returns the opponent socket
 function getOpponent(socket) {
