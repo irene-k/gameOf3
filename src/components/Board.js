@@ -1,27 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { newGame, endGame, playTurn } from '../actions'
+import io from 'socket.io-client'
+import { fetchBoardData, playTurn, turnPlayed, subscribeNewData } from '../actions'
 
-const Board = (props) => {
-    console.log("props", props)
+class Board extends React.Component {
 
 
+    constructor(props) {
+        super(props)
+    
+        this.socket = io('http://localhost:8080')
+      }
+
+    componentDidMount() {
+        this.props.subscribeNewData();
+        this.props.fetchBoardData();
+        //this.props.turnPlayed();
+    } 
+    
+    render(){
     return (
         <div>
             <div className="ui list">
-                {props.resultHistory.map((item, index) => (<div key={index} className="item"><div className="ui big basic label left-border" key={index}> {item} </div></div>))}
+                {this.props.results.map((item, index) => (<div key={index} className="item"><div className="ui big basic label left-border" key={index}> {item} </div></div>))}
             </div>
-            <div className="ui big basic label left-border">{props.current}</div>
+            <div id="current" className="ui big basic label left-border">{this.props.current}</div>
         </div>
     );
-};
+    }
+
+
+    
+    
+}
 
 const mapStateToProps = state => {
-    return { current: state.gameReducer.current,
-        resultHistory: state.gameReducer.resultHistory } 
+    return { 
+        current: state.gameReducer.current,
+        results: state.gameReducer.resultHistory } 
 };
 
-export default connect(mapStateToProps)(Board);
-
-// calculation = (state.response + control.addValue) /3 
+export default connect(mapStateToProps, { fetchBoardData, subscribeNewData, playTurn, turnPlayed })(Board);

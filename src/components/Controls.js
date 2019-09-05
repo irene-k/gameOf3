@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { newGame, endGame, playTurn } from '../actions'
+import { playTurn } from '../actions'
 
 class Controls extends React.Component {
     renderControls(){
@@ -24,8 +24,6 @@ class Controls extends React.Component {
 }
 
 const mapStateToProps = state => { 
-    console.log("state")
-    console.log(state)
     return { controls: state.controls,
             current: state.gameReducer.current,
             myTurn: state.gameReducer.myTurn };

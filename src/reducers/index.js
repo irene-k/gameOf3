@@ -1,13 +1,15 @@
 import { combineReducers } from 'redux';
-//import { reducer as formReducer } from 'redux-form';
-
 
 const initialState = {
-    current: Math.floor(Math.random() * 100),
+    /*
+    //current: Math.floor(Math.random() * 100),
     next:null,
-    resultHistory: [],
     myTurn: true,
-    gameOver: false
+    resultHistory: [],
+    gameOver: false */
+    current: null,
+    resultHistory: []
+
 }
 
 const controlsReducer = () => {
@@ -18,27 +20,25 @@ const controlsReducer = () => {
     ];
 };
 
-/*
-const selectedControlReducer = (selectedControl=null, action) => {
-    if (action.type === 'CONTROL_SELECTED') {
-        return action.payload
-    }
-    
-    return selectedControl;
-};
-*/
-
 const gameReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'NEW_GAME':
-            return {...state,
-                xTurn: true,
-                gameOver: false
+        case 'FETCH_BOARD_DATA':
+                console.log("Fetch board data")
+                return {
+                    ...state,
+                };
+                break;
+        case 'NEW_DATA':
+            console.log("new data")
+            return {
+                ...state,
+                current: action.payload
             };
             break;
-        case 'GAME_OVER':
-            return {...state,
-                gameOver: true
+        case 'GET_BOARD_STATE':
+            console.log("board state")
+            return {
+                ...state
             };
             break;
         case 'PLAY_TURN':
@@ -47,12 +47,21 @@ const gameReducer = (state = initialState, action) => {
                 next: action.payload.next,
                 myTurn: !state.myTurn,
                 current: action.payload.next,
-                //pastResults: pastResults.fill(action.payload.next),
-                //history: action.history.concat([{
-                //    cells: action.cells
-                //}]),
+                //current: [...state.resultHistory].pop(),
                 resultHistory: [...state.resultHistory, state.current],
                 gameOver: false
+            };
+            break;
+        case 'TURN_PLAYED':
+            console.log("turn played reducer")
+            return {...state,
+                resultHistory: action.payload
+            };
+            break;
+        case 'GAME_OVER':
+            return {
+                ...state,
+                gaeOver:true
             };
             break;
         default:
@@ -60,55 +69,9 @@ const gameReducer = (state = initialState, action) => {
     }
 };
 
-/*
-const boardStateReducer = (state=initialState, action) => {
-    if (action.type === 'BOARD_STATE') {
-        return action.payload
-    }
-    
-    return state;
-};
-*/
-
-/*
-const turnmsgReducer = () => {
-    return [
-        {msg:'Your turn'},
-        {msg:`Your opponent's turn`}
-    ]
-}
-
-const displayTurnmsgReducer = (turnmsg=`Waiting for opponent to join...`, action) => {
-    if (action.type === 'TURN_MESSAGE') {
-        return action.payload
-    }
-    
-    return turnmsg;
-};
-*/
-
-// introduce activePlayer? activePlayer="Rick" nextPlayer=" "
-
-/*
-const playTurnReducer = (state=initialState, action) => {
-    if (action.type === 'PLAY_TURN') {
-        console.log("reducer")
-        return {...state,
-            //current: action.payload.current,
-            next: action.payload.next,
-            myTurn: !state.myTurn,
-            current: action.payload.next
-        };  
-    }
-    return state;
-}
-*/
 
 
 export default combineReducers({
-    gameReducer,
-    //current: boardStateReducer,
-    controls: controlsReducer
-    //selected: selectedControlReducer,
-    //playTurn: playTurnReducer,
+    controls: controlsReducer,
+    gameReducer
 })

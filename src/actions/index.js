@@ -1,60 +1,70 @@
-// or make move - MOVE_MADE
-// return active player - next player
-// active player -> myTurn: true
+import { FETCH_BOARD_DATA, NEW_DATA, CONTROL_SELECTED, PLAY_TURN, TURN_PLAYED, GAME_OVER } from './types';
+import socket from '../socket-api/socket-api';
 
 
-// get the latest result
-export const boardState = current => {
-    return {
-        type: 'BOARD_STATE',
-        payload : current
-    };
+export function fetchBoardData(){
+    socket.emit('getData');
+    
+    return function(dispatch){
+        dispatch({
+            type: FETCH_BOARD_DATA
+        });
+    }
+    
+}
+
+export function subscribeNewData(){
+
+    return function(dispatch){
+        socket.on('newData', (data) => {
+            console.log('on new data subscriber:' + data)
+            dispatch({
+                type: NEW_DATA,
+                payload: data
+            });
+        })
+    }
 }
 
 export const selectControl = control => {
     return {
-        type: 'CONTROL_SELECTED',
+        type: CONTROL_SELECTED,
         payload: control
     };
 };
 
-export const displayTurnMessage = turnmsg => {
-    return {
-        type: 'TURN_MESSAGE',
-        payload: turnmsg
-    };
-};
-
-// new game will initialize the board : display first number and enable controls
-
-export const newGame = () => {
-    return {
-        type: 'NEW_GAME'
-    }
-};
-export const endGame = () => {
-    return {
-        type: 'GAE_OVER'
-    }
-};
-
-// turn involves current, selectedcontrol and next
 export const playTurn = (current, control, myTurn, resultHistory) => async dispatch => {
     console.log("actions")
-    console.log("current" + current)
-    console.log('control' + control.addValue);
+
+    let newValue = parseInt((current + control.addValue) /3)
+    socket.emit('playTurn', newValue);
 
     dispatch ({
-        type: 'PLAY_TURN',
+        type: PLAY_TURN,
         payload: {
             control:control,
             current:current,
-            next:parseInt((current + control.addValue) /3),
+            next:newValue,
             myTurn: myTurn,
             resultHistory:resultHistory
         }
     });
 };
 
-// create for turn, check if win
+export function turnPlayed(){
+    return function(dispatch){
+        socket.on('newData', (data) => {
+            console.log('on new data from turn play:' + data)
+            dispatch({
+                type: TURN_PLAYED,
+                payload: data
+            });
+        })
+    }
+}
 
+  export const gameOver = () => {
+    return {
+        type: GAME_OVER
+    }
+};

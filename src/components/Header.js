@@ -24,7 +24,7 @@ class Header extends React.Component {
         <h2 className="ui header has-padding">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0iOEoQGETZskXdfH6oJVRW38P8O6jbNLGzWjRMR6tO4Qo5WW" className="ui circular image" />
             <div className="content white">
-            Morty
+            Scoob
                 <div id="turnmsg" className="sub header white">{this.renderTurnMessage()}</div>
             </div>
         </h2>
@@ -41,7 +41,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(Header);
-//waiting for opponent to join as initial message
-//message is being updated based on turns during the game
-//as soon as 2nd joins its the 1st player's turn
-//so 2nd browser gets message it's your opponents turn
