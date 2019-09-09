@@ -1,15 +1,11 @@
 import { combineReducers } from 'redux';
 
 const initialState = {
-    /*
     //current: Math.floor(Math.random() * 100),
     next:null,
     myTurn: true,
     resultHistory: [],
-    gameOver: false */
-    current: null,
-    resultHistory: []
-
+    gameOver: false 
 }
 
 const controlsReducer = () => {
@@ -25,43 +21,34 @@ const gameReducer = (state = initialState, action) => {
         case 'FETCH_BOARD_DATA':
                 console.log("Fetch board data")
                 return {
-                    ...state,
+                    ...state
                 };
                 break;
         case 'NEW_DATA':
             console.log("new data")
             return {
                 ...state,
-                current: action.payload
-            };
-            break;
-        case 'GET_BOARD_STATE':
-            console.log("board state")
-            return {
-                ...state
+                current: action.payload            
             };
             break;
         case 'PLAY_TURN':
             console.log("reducer")
             return {...state,
-                next: action.payload.next,
-                myTurn: !state.myTurn,
                 current: action.payload.next,
-                //current: [...state.resultHistory].pop(),
+                next: action.payload.next,
                 resultHistory: [...state.resultHistory, state.current],
+                myTurn: !state.myTurn,
                 gameOver: false
             };
             break;
         case 'TURN_PLAYED':
             console.log("turn played reducer")
-            return {...state,
-                resultHistory: action.payload
+            return {...state
             };
             break;
         case 'GAME_OVER':
             return {
-                ...state,
-                gaeOver:true
+                ...state
             };
             break;
         default:

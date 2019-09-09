@@ -6,19 +6,17 @@ import { fetchBoardData, playTurn, turnPlayed, subscribeNewData } from '../actio
 
 class Board extends React.Component {
 
-
     constructor(props) {
         super(props)
-    
         this.socket = io('http://localhost:8080')
-      }
+    }
 
     componentDidMount() {
         this.props.subscribeNewData();
         this.props.fetchBoardData();
-        //this.props.turnPlayed();
-    } 
-    
+        this.props.turnPlayed();
+    }
+     
     render(){
     return (
         <div>
@@ -28,11 +26,7 @@ class Board extends React.Component {
             <div id="current" className="ui big basic label left-border">{this.props.current}</div>
         </div>
     );
-    }
-
-
-    
-    
+    }  
 }
 
 const mapStateToProps = state => {

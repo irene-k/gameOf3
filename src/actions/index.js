@@ -3,18 +3,15 @@ import socket from '../socket-api/socket-api';
 
 
 export function fetchBoardData(){
-    socket.emit('getData');
-    
+    socket.emit('getData'); 
     return function(dispatch){
         dispatch({
             type: FETCH_BOARD_DATA
         });
     }
-    
 }
 
 export function subscribeNewData(){
-
     return function(dispatch){
         socket.on('newData', (data) => {
             console.log('on new data subscriber:' + data)
@@ -33,15 +30,15 @@ export const selectControl = control => {
     };
 };
 
-export const playTurn = (current, control, myTurn, resultHistory) => async dispatch => {
-    console.log("actions")
+export const playTurn = (current, control, myTurn, resultHistory) => {
+    console.log("play turn action")
 
     let newValue = parseInt((current + control.addValue) /3)
     socket.emit('playTurn', newValue);
 
-    dispatch ({
+    return ({
         type: PLAY_TURN,
-        payload: {
+        payload : {
             control:control,
             current:current,
             next:newValue,
@@ -53,11 +50,11 @@ export const playTurn = (current, control, myTurn, resultHistory) => async dispa
 
 export function turnPlayed(){
     return function(dispatch){
-        socket.on('newData', (data) => {
-            console.log('on new data from turn play:' + data)
+        socket.on('turnPlayed', (turnData) => {
+            console.log('on turn played subscriber:' + turnData)
             dispatch({
                 type: TURN_PLAYED,
-                payload: data
+                payload: turnData
             });
         })
     }

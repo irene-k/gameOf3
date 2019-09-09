@@ -9,15 +9,15 @@ io.listen(port);
 console.log('listening on port ', port);
 
 // Store connected clients
-const clients = {};
+const clientss = {};
 
 const addClient = client => {
   console.log("New client connected", client.id);
-  clients[client.id] = client;
+  clientss[client.id] = client;
 };
 const removeClient = client => {
   console.log("Client disconnected", client.id);
-  delete clients[client.id];
+  delete clientss[client.id];
 };
 
 // Match Players
@@ -38,28 +38,26 @@ io.on('connection', (client) => {
   });
 
   // Fetch board data
-  client.on('getData', (data) => {
-    console.log("Getting data server side: " + data)
+  client.on('getData', () => {
+    console.log("Getting data server side")
       if(lastNumber === null)
-        lastNumber = Math.floor(Math.random() * 100)
-    client.emit('newData', lastNumber);
-    
+        lastNumber = Math.floor(Math.random() * 100);
+      client.emit('newData', lastNumber);
+    //getOpponent and emmit
   });
-  //Get board state
+
+
+   client.on('playTurn', (addTurnData) => {
+      io.emit('newData', addTurnData);
+      console.log('Play turn Data:' + addTurnData)
+  });
+
   /*
-  client.on('fetchBoardState', () => {
-      response => {
-          client.emit('newData', response.data);
-      }
+  client.on('turnPlayed', () => {
+    console.log("Getting Turn data server side")
+    client.emit('newData', data);
   }); */
 
-  //play turn
-  client.on('playTurn', (data) => {
-    console.log("play turn: " + data)
-    lastNumber = data
-      client.emit('newData', lastNumber);
-    
-  });
   //game over
   client.on('gameOver', (data) => {
     response => {
