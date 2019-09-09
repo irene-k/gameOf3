@@ -35,7 +35,7 @@ const gameReducer = (state = initialState, action) => {
             console.log("reducer")
             return {...state,
                 current: action.payload.next,
-                next: action.payload.next,
+                //next: action.payload.next,
                 resultHistory: [...state.resultHistory, state.current],
                 myTurn: !state.myTurn,
                 gameOver: false

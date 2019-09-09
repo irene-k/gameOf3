@@ -48,7 +48,7 @@ io.on('connection', (client) => {
 
 
    client.on('playTurn', (turnData) => {
-      io.emit('turnPlayed', turnData);
+    client.broadcast.emit('turnPlayed', turnData);
       console.log('Play turn Data:' + turnData)
   });
 
