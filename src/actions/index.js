@@ -34,19 +34,20 @@ export const playTurn = (current, control, myTurn, resultHistory) => {
     console.log("play turn action")
 
     let newValue = parseInt((current + control.addValue) /3)
+    let playdata = {control:control,
+        current:current,
+        next:newValue,
+        myTurn: myTurn,
+        resultHistory:resultHistory}
     socket.emit('playTurn', newValue);
 
-    return ({
+    return function(dispatch){
+        dispatch({
         type: PLAY_TURN,
-        payload : {
-            control:control,
-            current:current,
-            next:newValue,
-            myTurn: myTurn,
-            resultHistory:resultHistory
-        }
-    });
-};
+        payload : playdata
+        });
+    }
+}
 
 export function turnPlayed(){
     return function(dispatch){

@@ -43,7 +43,9 @@ const gameReducer = (state = initialState, action) => {
             break;
         case 'TURN_PLAYED':
             console.log("turn played reducer")
-            return {...state
+            return {...state,
+                current: action.payload,            
+                resultHistory: [...state.resultHistory, state.current],
             };
             break;
         case 'GAME_OVER':
