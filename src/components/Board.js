@@ -31,7 +31,9 @@ class Board extends React.Component {
 const mapStateToProps = state => {
     return { 
         current: state.gameReducer.current,
-        results: state.gameReducer.resultHistory } 
+        results: state.gameReducer.resultHistory,
+        myTurn: state.gameReducer.myTurn,
+        controlsDisabled: state.gameReducer.controlsDisabled } 
 };
 
 export default connect(mapStateToProps, { fetchBoardData, startGame, playTurn, turnPlayed })(Board);

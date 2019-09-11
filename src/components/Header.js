@@ -12,7 +12,7 @@ class Header extends React.Component {
           return `Your opponent's turn`;
       
         } 
-        if (this.props.current===1) {
+        if (this.props.isGameOver) {
           return 'Game Over!'
         }
         else {
@@ -41,8 +41,8 @@ class Header extends React.Component {
 
 const mapStateToProps = state => {
   return { myTurn: state.gameReducer.myTurn,
-           current: state.gameReducer.current 
-  } 
+           current: state.gameReducer.current,            
+           isGameOver: state.gameReducer.isGameOver  } 
 };
 
 export default connect(mapStateToProps)(Header);
