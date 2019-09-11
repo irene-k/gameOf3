@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import io from 'socket.io-client'
-import { fetchBoardData, playTurn, turnPlayed, subscribeNewData } from '../actions'
+import { fetchBoardData, startGame, playTurn, turnPlayed } from '../actions'
 
 class Board extends React.Component {
 
@@ -12,11 +11,11 @@ class Board extends React.Component {
     }
 
     componentDidMount() {
-        this.props.subscribeNewData();
+        this.props.startGame();
         this.props.fetchBoardData();
         this.props.turnPlayed();
     }
-     
+
     render(){
     return (
         <div>
@@ -35,4 +34,4 @@ const mapStateToProps = state => {
         results: state.gameReducer.resultHistory } 
 };
 
-export default connect(mapStateToProps, { fetchBoardData, subscribeNewData, playTurn, turnPlayed })(Board);
+export default connect(mapStateToProps, { fetchBoardData, startGame, playTurn, turnPlayed })(Board);

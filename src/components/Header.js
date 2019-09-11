@@ -1,18 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { playTurn } from '../actions';
 
 class Header extends React.Component {
 
   
     renderTurnMessage(){
-        if (this.props.myTurn === true){
+        if (this.props.myTurn === true && this.props.current>1){
             return 'Your turn';
         }
-        if (this.props.myTurn === false) {
+        if (this.props.myTurn === false && this.props.current>1) {
           return `Your opponent's turn`;
       
-        } else {
+        } 
+        if (this.props.current===1) {
+          return 'Game Over!'
+        }
+        else {
           return `Waiting for oponent to join...`;
         }
       }
@@ -22,7 +25,7 @@ class Header extends React.Component {
         return (
         <div>
         <h2 className="ui header has-padding">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0iOEoQGETZskXdfH6oJVRW38P8O6jbNLGzWjRMR6tO4Qo5WW" className="ui circular image" />
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSj0iOEoQGETZskXdfH6oJVRW38P8O6jbNLGzWjRMR6tO4Qo5WW" alt="pl-img" className="ui circular image" />
             <div className="content white">
             Scoob
                 <div id="turnmsg" className="sub header white">{this.renderTurnMessage()}</div>
@@ -37,7 +40,9 @@ class Header extends React.Component {
 
 
 const mapStateToProps = state => {
-  return { myTurn: state.gameReducer.myTurn } 
+  return { myTurn: state.gameReducer.myTurn,
+           current: state.gameReducer.current 
+  } 
 };
 
 export default connect(mapStateToProps)(Header);

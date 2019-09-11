@@ -1,5 +1,5 @@
 export const FETCH_BOARD_DATA = 'FETCH_BOARD_DATA';
-export const NEW_DATA = 'NEW_DATA';
+export const NEW_GAME = 'NEW_GAME';
 export const CONTROL_SELECTED = 'CONTROL_SELECTED';
 export const PLAY_TURN = 'PLAY_TURN';
 export const TURN_PLAYED = 'TURN_PLAYED';

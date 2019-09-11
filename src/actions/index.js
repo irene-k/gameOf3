@@ -1,8 +1,8 @@
-import { FETCH_BOARD_DATA, NEW_DATA, CONTROL_SELECTED, PLAY_TURN, TURN_PLAYED, GAME_OVER } from './types';
+import { FETCH_BOARD_DATA, NEW_GAME, CONTROL_SELECTED, PLAY_TURN, TURN_PLAYED, GAME_OVER } from './types';
 import socket from '../socket-api/socket-api';
 
 
-export function fetchBoardData(){
+export const fetchBoardData = () => {
     socket.emit('getData'); 
     return function(dispatch){
         dispatch({
@@ -11,12 +11,12 @@ export function fetchBoardData(){
     }
 }
 
-export function subscribeNewData(){
+export const startGame = () => {
     return function(dispatch){
-        socket.on('newData', (data) => {
-            console.log('on new data subscriber:' + data)
+        socket.on('newGame', (data) => {
+            console.log('on new game subscriber:')
             dispatch({
-                type: NEW_DATA,
+                type: NEW_GAME,
                 payload: data
             });
         })
@@ -30,15 +30,17 @@ export const selectControl = control => {
     };
 };
 
-export const playTurn = (current, control, myTurn, resultHistory) => {
+export const playTurn = (current, control, resultHistory, myTurn, controlsDisabled) => {
     console.log("play turn action")
 
     let newValue = parseInt((current + control.addValue) /3)
     let playdata = {control:control,
         current:current,
         next:newValue,
+        resultHistory:resultHistory,
         myTurn: myTurn,
-        resultHistory:resultHistory}
+        controlsDisabled: controlsDisabled
+        }
     socket.emit('playTurn', newValue);
 
     return function(dispatch){
@@ -49,20 +51,26 @@ export const playTurn = (current, control, myTurn, resultHistory) => {
     }
 }
 
-export function turnPlayed(){
+export const turnPlayed = () => {
     return function(dispatch){
-        socket.on('turnPlayed', (turnData) => {
-            console.log('on turn played subscriber:' + turnData)
+        socket.on('turnPlayed', (playdata) => {
+            console.log('on turn played subscriber:' + playdata)
             dispatch({
                 type: TURN_PLAYED,
-                payload: turnData
+                payload: playdata
             });
         })
     }
 }
 
-  export const gameOver = () => {
-    return {
-        type: GAME_OVER
+export const gameOver = () => {
+    return function(dispatch){
+        socket.on('gameOver', (data) => {
+            console.log('on game over subscriber:')
+            dispatch({
+                type: GAME_OVER,
+                payload: data
+            });
+        })
     }
-};
+}

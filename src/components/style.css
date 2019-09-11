@@ -19,10 +19,6 @@
   min-height: calc(100vh - 200px);
 }
 
-.footer {
-  height: 70px;
-}
-
 ul .list{
   display:block;
 }
@@ -42,3 +38,8 @@ ul .list{
   width: 60px;
   text-align: center;
 }
+
+.footer {
+  height: 70px;
+}
+
