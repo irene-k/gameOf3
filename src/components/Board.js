@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import io from 'socket.io-client'
-import { fetchBoardData, startGame, playTurn, turnPlayed } from '../actions'
+import io from 'socket.io-client';
+import { fetchBoardData, startGame, playTurn, turnPlayed } from '../actions';
 
 class Board extends React.Component {
 

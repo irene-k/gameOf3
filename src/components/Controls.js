@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { playTurn, turnPlayed, gameOver } from '../actions'
+import { playTurn, turnPlayed, gameOver } from '../actions';
 
 class Controls extends React.Component {
 
+
     componentDidMount() {
-        this.props.turnPlayed();
         this.props.gameOver();
     }
 
@@ -40,5 +40,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps,{ playTurn, turnPlayed, gameOver })(Controls);
-
-//disabled={this.props.controlsDisabled}

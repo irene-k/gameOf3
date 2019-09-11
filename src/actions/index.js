@@ -14,7 +14,6 @@ export const fetchBoardData = () => {
 export const startGame = () => {
     return function(dispatch){
         socket.on('newGame', (data) => {
-            console.log('on new game subscriber:')
             dispatch({
                 type: NEW_GAME,
                 payload: data
@@ -31,7 +30,6 @@ export const selectControl = control => {
 };
 
 export const playTurn = (current, control, resultHistory, myTurn, controlsDisabled) => {
-    console.log("play turn action")
 
     let newValue = parseInt((current + control.addValue) /3)
     let playdata = {control:control,
@@ -54,7 +52,6 @@ export const playTurn = (current, control, resultHistory, myTurn, controlsDisabl
 export const turnPlayed = () => {
     return function(dispatch){
         socket.on('turnPlayed', (playdata) => {
-            console.log('on turn played subscriber:' + playdata)
             dispatch({
                 type: TURN_PLAYED,
                 payload: playdata
@@ -66,7 +63,6 @@ export const turnPlayed = () => {
 export const gameOver = () => {
     return function(dispatch){
         socket.on('gameOver', (data) => {
-            console.log('on game over subscriber:')
             dispatch({
                 type: GAME_OVER,
                 payload: data

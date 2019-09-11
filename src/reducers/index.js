@@ -20,20 +20,17 @@ const controlsReducer = () => {
 const gameReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_BOARD_DATA:
-            console.log("Fetch board data")
             return {
                 ...state
             };
             break;
         case NEW_GAME:
-            console.log("new game")
             return {
                 ...state,
                 current: action.payload            
             };
             break;
         case PLAY_TURN:
-            console.log("reducer")
             return {...state,
                 current: action.payload.next,
                 resultHistory: [...state.resultHistory, state.current],
@@ -42,7 +39,6 @@ const gameReducer = (state = initialState, action) => {
                 };
             break;
         case TURN_PLAYED:
-            console.log("turn played reducer")
             return {...state,
                 current: action.payload,            
                 resultHistory: [...state.resultHistory, state.current],

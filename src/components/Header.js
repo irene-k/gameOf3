@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { playTurn } from '../actions';
 
 class Header extends React.Component {
 
@@ -16,7 +17,7 @@ class Header extends React.Component {
           return 'Game Over!'
         }
         else {
-          return `Waiting for oponent to join...`;
+          return '';
         }
       }
   
@@ -45,4 +46,4 @@ const mapStateToProps = state => {
            isGameOver: state.gameReducer.isGameOver  } 
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, {playTurn})(Header);
