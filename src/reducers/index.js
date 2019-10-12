@@ -1,61 +1,77 @@
 import { combineReducers } from 'redux';
-import { FETCH_BOARD_DATA, NEW_GAME, PLAY_TURN, TURN_PLAYED, GAME_OVER } from '../actions/types';
+import { UPDATE_PLAYES_LIST, FETCH_BOARD_DATA, NEW_GAME, PLAY_TURN, TURN_PLAYED, GAME_OVER, IS_TIE } from '../actions/types';
 
 const initialState = {
+    players: 0,
     next:null,
     resultHistory: [],
     myTurn: true,
-    controlsDisabled: false,
-    isGameOver: false
+    isGameOver: false,
+    isTie: false
 }
 
-const controlsReducer = () => {
-    return [
-        {title:'minus-one', addValue: -1},
-        {title:'zero', addValue: 0},
-        {title:'plus-one', addValue: 1}
-    ];
-};
+const updatePlayerList = (state, action) => ({
+    ...state, 
+    players: action.payload
+})
+
+const fetchBoardData = (state, action) => ({
+    ...state
+})
+
+const newGame = (state, action) => ({
+    ...state,
+    current: action.payload
+})
+
+const playTurn = (state, action) => ({
+    ...state,
+    current: action.payload.next,
+    next: action.payload.next,
+    resultHistory: [...state.resultHistory, state.current],
+    myTurn: !state.myTurn
+})
+
+const turnPlayed = (state, action) => ({
+    ...state,
+    current: action.payload,
+    next: action.payload.next,
+    resultHistory: [...state.resultHistory, state.current],
+    myTurn: true
+})
+
+const gameOver = (state, action) => ({
+    ...state,
+    isGameOver: action.payload
+})
+
+const isTie = (state, action) => ({
+    ...state,
+    isTie: action.payload
+})
 
 const gameReducer = (state = initialState, action) => {
+    console.log(action)
     switch (action.type) {
+        case UPDATE_PLAYES_LIST:
+            return updatePlayerList(state,action);
         case FETCH_BOARD_DATA:
-            return {
-                ...state
-            };
-            break;
+            return fetchBoardData(state,action);
         case NEW_GAME:
-            return {
-                ...state,
-                current: action.payload            
-            };
-            break;
+            return newGame(state,action);
         case PLAY_TURN:
-            return {...state,
-                current: action.payload.next,
-                resultHistory: [...state.resultHistory, state.current],
-                myTurn: !state.myTurn,
-                controlsDisabled: !state.controlsDisabled,
-                };
-            break;
+            return playTurn(state,action);
         case TURN_PLAYED:
-            return {...state,
-                current: action.payload,            
-                resultHistory: [...state.resultHistory, state.current],
-            };
-            break;
+            return turnPlayed(state,action);
         case GAME_OVER:
-            return {
-                ...state,
-                isGameOver: action.payload            
-            };
-            break;
+            return gameOver(state,action);
+        case IS_TIE:
+            return isTie(state,action);
         default:
             return state;
     }
 };
 
 export default combineReducers({
-    controls: controlsReducer,
     gameReducer
 })

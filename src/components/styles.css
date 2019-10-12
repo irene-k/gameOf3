@@ -1,0 +1,86 @@
+.body-bg {
+  background-color: #fafafa !important;
+}
+
+.scoober-blue {
+  background: linear-gradient(222deg, rgb(144, 225, 162) 0%, #47b8f2 100%) !important;
+  border-bottom-left-radius: 50% 40%;
+  border-bottom-right-radius: 50% 80%;
+  min-height: 136px;
+}
+
+.white-text {
+  color:#fff !important;
+}
+
+.has-padding {
+  padding: 8px 20px !important;
+}
+
+.header img {
+  width:3em !important;
+}
+
+.main{
+  min-height: calc(100vh - 200px);
+}
+
+.results-wrapper{
+  width:75% !important;
+  background-color: #fff;
+  border-radius: 16px;
+  margin-top:-48px;
+  min-height: calc(100vh - 200px);
+  box-shadow: 5px 5px 10px 2px #eee;
+  margin-bottom: 16px;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* General styling */
+  list-style-type: none !important;
+  margin: 0 auto;
+  padding: 24px;
+  width: 100% !important;
+}
+
+.results li {
+  background: #8ee0a3 !important;
+  color:#fff;
+  font-weight: 700;
+  font-size: 1.2em;
+  text-align: center;
+  border-radius: 16px;
+  padding: 8px;
+  margin: 2px 8px 2px 0 !important;
+  width: 100px;
+}
+
+/* Styles specific to our chat bubbles */
+.results li.from-me {
+  align-self: flex-end;
+  margin: 2px 0 2px 8px !important;
+}
+
+.footer {
+  background-color: #fafafa !important;
+  border-bottom: solid 8px rgba(95, 28, 223, 0.5) !important;;
+}
+
+.control {
+  background: #4e4adf !important;
+  transform: rotate(6.3deg);
+  width: 72px;
+  height: 56px;
+  border-radius: 24px !important;
+}
+
+.control:hover {
+  background:rgb(95, 28, 225) !important;
+}
+
+.hideControls {
+  visibility: hidden;
+}
