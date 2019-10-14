@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Button from './Button';
 import io from 'socket.io-client';
-import { fetchBoardData, playerReady, startGame, playTurn, turnPlayed, gameOver, gameIsTie } from '../actions';
+import { playerReady, startGame, playTurn, turnPlayed, gameOver, gameIsTie } from '../actions';
 
 class Board extends React.Component {
 
@@ -12,28 +12,23 @@ class Board extends React.Component {
     }
 
     componentDidMount() {
-        this.props.startGame();
-        this.props.fetchBoardData();
-        this.props.turnPlayed();
-        this.props.gameOver();
-        this.props.gameIsTie();
     }
 
     renderResults(){
 
-        //const fromMe = !this.props.myTurn ? 'from-me' : '';
+        const fromMe = this.props.players ===2 ? 'fromMe' : '';
 
         return(
             <div className="ui container results-wrapper">
                 <ol className="results">
                     {this.props.results.map((item, index) => 
                         (<li key={index} 
-                            className="from-me">
+                            className={` ${fromMe}`}>
                             {item} 
                         </li>
                         )
                     )}
-                    <li id="current">
+                    <li id="current" className={` ${fromMe}`}>
                         {this.props.current}
                     </li>
                 </ol> 
@@ -67,8 +62,7 @@ class Board extends React.Component {
                     <Button 
                     className="ui button white-text" 
                     text={text} 
-                    onClick={this.props.playerReady} 
-                    disabled={!this.props.myTurn} />
+                    onClick={this.props.playerReady}/>
                 </div>
             </div>
         );
@@ -80,40 +74,29 @@ class Board extends React.Component {
     console.log(nbrPlayer)
     return (
         <div className="main ui container">
-            {this.renderResults()}
-            {this.renderControls()}
+            {/* {this.renderResults()}
+            {this.renderControls()} */}
 
 
-            {/* {nbrPlayer < 1 && this.renderWelcome(nbrPlayer)}
+            {nbrPlayer < 1 && this.renderWelcome(nbrPlayer)}
             {nbrPlayer >= 2 && 
                 <div>
                 {this.renderResults()}
                 {this.renderControls()}
                 </div>
-            } */}
+            }
         </div>  
     );
     }  
 }
 
-// const mapStateToProps = state => {
-//     return { 
-//         current: state.gameReducer.current,
-//         results: state.gameReducer.resultHistory,
-//         myTurn: state.gameReducer.myTurn,
-//         isGameOver: state.gameReducer.isGameOver,
-//         isTie: state.gameReducer.isTie,
-//         players: state.gameReducer.players
-//     } 
-// };
-
 const mapStateToProps = state => ({ 
+    players: state.gameReducer.players,
+    myTurn: state.gameReducer.myTurn,
     current: state.gameReducer.current,
     results: state.gameReducer.resultHistory,
-    myTurn: state.gameReducer.myTurn,
     isGameOver: state.gameReducer.isGameOver,
-    isTie: state.gameReducer.isTie,
-    players: state.gameReducer.players
+    isTie: state.gameReducer.isTie
 })
 
-export default connect(mapStateToProps, { fetchBoardData, playerReady, startGame, playTurn, turnPlayed, gameOver, gameIsTie })(Board);
+export default connect(mapStateToProps, { playerReady, startGame, playTurn, turnPlayed, gameOver, gameIsTie })(Board);

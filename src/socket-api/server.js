@@ -31,42 +31,49 @@ let isTie = false;
 
 io.on('connection', (client) => {
 
-  // addClient(client);
-  client.on("PLAYER_IS_READY", () => {
+  client.on('PLAYER_IS_READY', () => {
     console.log('something came');
     addClient(client);
-    client.emit("PLAYER_CONNECTED", {
+    client.emit('playerConnected', {
       id: client.id,
+      myTurn: clients.length === 2,
       players: clients.length
       });
 
-      // check if two players are comnected
-      // if yes,emit another socket to all players, to start the game with the generated number
-      // myTurn is true when the id of the user that coming from the server is the same as the one i have in state
+
+    number = Math.floor(Math.random() * 100);
+
+    if (clients.length === 2)
+      io.emit('newGame', {
+        current: number,
+        players: clients.length,
+      });
+  });
+
+  client.on('PLAY_TURN', (turnData) => {
+    console.log(`got data from client ${client.id}`)
+    console.log(`data ${turnData}`)
+    const newNumber = parseInt((turnData.current + turnData.control) /3);
+    const data = { 
+      current: newNumber,
+      next: newNumber,
+      myTurn: true      
+    }
+
+    io.emit('turnPlayed', data);
+    if (newNumber === 1){
+      isGameover = true;
+      io.emit('gameOver', isGameover);
+    }
+    else if (newNumber === 0){
+      isTie = true;
+      io.emit('gameIsTie', isTie);
+    }
   });
   
   client.on("disconnect", () => {
     removeClient(client);
     client.broadcast.emit("clientdisconnect", client.id);
-  });
-
-  client.on('getData', () => {
-      if(number === null)
-        number = Math.floor(Math.random() * 100);
-      client.emit('newGame', number);
-
-  });
-
-   client.on('playTurn', (turnData) => {
-    client.broadcast.emit('turnPlayed', turnData);
-    if (turnData === 1){
-      isGameover = true;
-      io.emit('gameOver', isGameover);
-    }
-    else if (turnData === 0){
-      isTie = true;
-      io.emit('gameIsTie', isTie);
-    }
   });
 
 });

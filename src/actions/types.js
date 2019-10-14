@@ -1,8 +1,6 @@
-export const UPDATE_PLAYES_LIST = 'UPDATE_PLAYES_LIST';
 export const PLAYER_IS_READY = 'PLAYER_IS_READY';
-export const FETCH_BOARD_DATA = 'FETCH_BOARD_DATA';
+export const UPDATE_PLAYERS_LIST = 'UPDATE_PLAYERS_LIST';
 export const NEW_GAME = 'NEW_GAME';
-export const CONTROL_SELECTED = 'CONTROL_SELECTED';
 export const PLAY_TURN = 'PLAY_TURN';
 export const TURN_PLAYED = 'TURN_PLAYED';
 export const GAME_OVER = 'GAME_OVER';

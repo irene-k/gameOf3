@@ -2,13 +2,6 @@
   background-color: #fafafa !important;
 }
 
-.scoober-blue {
-  background: linear-gradient(222deg, rgb(144, 225, 162) 0%, #47b8f2 100%) !important;
-  border-bottom-left-radius: 50% 40%;
-  border-bottom-right-radius: 50% 80%;
-  min-height: 136px;
-}
-
 .white-text {
   color:#fff !important;
 }
@@ -17,10 +10,19 @@
   padding: 8px 20px !important;
 }
 
+/* Header */
+.scoober-blue {
+  background: linear-gradient(222deg, rgb(144, 225, 162) 0%, #47b8f2 100%) !important;
+  border-bottom-left-radius: 50% 40%;
+  border-bottom-right-radius: 50% 80%;
+  min-height: 136px;
+}
+
 .header img {
   width:3em !important;
 }
 
+/* Board */
 .main{
   min-height: calc(100vh - 200px);
 }
@@ -59,10 +61,12 @@
 }
 
 /* Styles specific to our chat bubbles */
-.results li.from-me {
+.results li.fromMe {
   align-self: flex-end;
   margin: 2px 0 2px 8px !important;
 }
+
+/* Controls */
 
 .footer {
   background-color: #fafafa !important;

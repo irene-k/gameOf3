@@ -1,44 +1,48 @@
 import { combineReducers } from 'redux';
-import { UPDATE_PLAYES_LIST, FETCH_BOARD_DATA, NEW_GAME, PLAY_TURN, TURN_PLAYED, GAME_OVER, IS_TIE } from '../actions/types';
+import { UPDATE_PLAYERS_LIST, NEW_GAME, PLAY_TURN, TURN_PLAYED, GAME_OVER, IS_TIE } from '../actions/types';
 
 const initialState = {
     players: 0,
-    next:null,
+    myTurn: false,
+    current:null,
     resultHistory: [],
-    myTurn: true,
     isGameOver: false,
     isTie: false
 }
 
-const updatePlayerList = (state, action) => ({
-    ...state, 
-    players: action.payload
-})
+const updatePlayerList = (state, action) => {
+    console.log(action)
+    return {
+        ...state, 
+        id: action.payload.id,
+        myTurn: action.payload.myTurn,
+        players: action.payload.players
+    }
+}
 
-const fetchBoardData = (state, action) => ({
-    ...state
-})
-
-const newGame = (state, action) => ({
-    ...state,
-    current: action.payload
-})
+const newGame = (state, action) => {
+    console.log('newGame: ',action.payload);
+    return {
+        ...state,
+        current: action.payload.current,
+        players: action.payload.players
+    }
+}
 
 const playTurn = (state, action) => ({
     ...state,
-    current: action.payload.next,
-    next: action.payload.next,
-    resultHistory: [...state.resultHistory, state.current],
-    myTurn: !state.myTurn
+    current: action.payload.current
 })
 
-const turnPlayed = (state, action) => ({
-    ...state,
-    current: action.payload,
-    next: action.payload.next,
-    resultHistory: [...state.resultHistory, state.current],
-    myTurn: true
-})
+const turnPlayed = (state, action) => {
+    console.log(action)
+    return {
+        ...state,
+        current: action.payload.current,
+        resultHistory: [...state.resultHistory, state.current],
+        myTurn: !state.myTurn
+    }
+}
 
 const gameOver = (state, action) => ({
     ...state,
@@ -53,10 +57,8 @@ const isTie = (state, action) => ({
 const gameReducer = (state = initialState, action) => {
     console.log(action)
     switch (action.type) {
-        case UPDATE_PLAYES_LIST:
+        case UPDATE_PLAYERS_LIST:
             return updatePlayerList(state,action);
-        case FETCH_BOARD_DATA:
-            return fetchBoardData(state,action);
         case NEW_GAME:
             return newGame(state,action);
         case PLAY_TURN:
