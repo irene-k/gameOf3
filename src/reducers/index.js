@@ -7,6 +7,7 @@ const initialState = {
     current:null,
     resultHistory: [],
     isGameOver: false,
+    winner: null,
     isTie: false
 }
 
@@ -14,9 +15,10 @@ const updatePlayerList = (state, action) => {
     console.log(action)
     return {
         ...state, 
-        id: action.payload.id,
-        myTurn: action.payload.myTurn,
-        players: action.payload.players
+        players: action.payload.players,
+        playerId: action.payload.id,
+        playerName: action.payload.playerName,
+        myTurn: action.payload.myTurn
     }
 }
 

@@ -13,10 +13,10 @@ import App from './components/App';
 const socket = openSocket('http://localhost:8080');
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-socket.on('playerConnected', (recievedData) => {
+socket.on('playerConnected', (payload) => {
     console.log('i got this -> ', 
     store.dispatch(
-        updatePlayersList(recievedData)
+        updatePlayersList(payload)
     ))
 });
 

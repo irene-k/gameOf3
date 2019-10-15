@@ -7,8 +7,10 @@ console.log('listening on port ', port);
 const clients = [];
 const addClient = client => {
   console.log("New client connected", client.id);
-
-  clients.push(client);
+  
+  if (clients.indexOf(client.id) === -1)
+    clients.push(client);
+  //clients.push(client);
   client.playerNumber = clients.length;
 
   if (client.playerNumber % 2 === 0)
@@ -35,13 +37,14 @@ io.on('connection', (client) => {
     console.log('something came');
     addClient(client);
     client.emit('playerConnected', {
-      id: client.id,
-      myTurn: clients.length === 2,
-      players: clients.length
+      players: clients.length,
+      playerId: client.id,
+      playerName: client.name,
+      myTurn: clients.length === 2
       });
 
 
-    number = Math.floor(Math.random() * 100);
+    number = Math.floor(Math.random() * 1000);
 
     if (clients.length === 2)
       io.emit('newGame', {

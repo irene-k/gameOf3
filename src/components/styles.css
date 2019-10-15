@@ -10,6 +10,27 @@
   padding: 8px 20px !important;
 }
 
+/* Welcome */
+
+.welcome{
+  background: linear-gradient(222deg, rgb(144, 225, 162) 0%, #47b8f2 100%) !important;
+  height: 100vh !important;
+}
+
+.welcome button {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border-radius: 24px !important;
+}
+
+.welcome button:hover,button:focus {
+  color: #6dcccb !important;
+}
+
 /* Header */
 .scoober-blue {
   background: linear-gradient(222deg, rgb(144, 225, 162) 0%, #47b8f2 100%) !important;
