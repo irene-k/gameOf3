@@ -10,15 +10,14 @@ const addClient = client => {
   
   if (clients.indexOf(client.id) === -1)
     clients.push(client);
-  //clients.push(client);
-  client.playerNumber = clients.length;
+  client.playerCount = clients.length;
 
-  if (client.playerNumber % 2 === 0)
+  if (client.playerCount % 2 === 0)
     client.name = "Rick";
   else
     client.name = "Morty"; 
 
-  console.log( "Player Name: " + client.name + " , number of players: " + client.playerNumber);
+  console.log( "Player Name: " + client.name + " , number of players: " + client.playerCount);
   
 };
 const removeClient = client => {
@@ -29,6 +28,7 @@ const removeClient = client => {
 
 let number = null;
 let isGameover = false;
+let winner=null;
 let isTie = false;
 
 io.on('connection', (client) => {
@@ -37,9 +37,9 @@ io.on('connection', (client) => {
     console.log('something came');
     addClient(client);
     client.emit('playerConnected', {
-      players: clients.length,
+      playerCount: clients.length,
       playerId: client.id,
-      playerName: client.name,
+      player: client.name,
       myTurn: clients.length === 2
       });
 
@@ -49,24 +49,24 @@ io.on('connection', (client) => {
     if (clients.length === 2)
       io.emit('newGame', {
         current: number,
-        players: clients.length,
+        playerCount: clients.length
       });
   });
 
   client.on('PLAY_TURN', (turnData) => {
-    console.log(`got data from client ${client.id}`)
+    console.log(`got data from client ${client.name}`)
     console.log(`data ${turnData}`)
     const newNumber = parseInt((turnData.current + turnData.control) /3);
     const data = { 
       current: newNumber,
-      next: newNumber,
+      player: turnData.player,
       myTurn: true      
     }
-
     io.emit('turnPlayed', data);
     if (newNumber === 1){
       isGameover = true;
-      io.emit('gameOver', isGameover);
+      winner = turnData.player
+      io.emit('gameOver', {isGameover,winner});
     }
     else if (newNumber === 0){
       isTie = true;

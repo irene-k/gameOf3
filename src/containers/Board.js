@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Header from './Header';
-import rick from '../assets/rick.jpg'
-import morty from '../assets/morty.jpg'
-import Button from './Button';
+import Header from '../components/Header';
+import rick from '../assets/rick.jpg';
+import morty from '../assets/morty.jpg';
+import logo from '../assets/logo.png';
+import Button from '../components/Button';
 import io from 'socket.io-client';
 import { playerReady, startGame, playTurn, turnPlayed, gameOver, gameIsTie } from '../actions';
 
@@ -21,9 +22,12 @@ class Board extends React.Component {
         const text = nbrPlayer === 0 ? 'Play!' : 'Waiting...';
         return(
             <div className="ui center aligned container welcome">
+                <div>
+                    <img src={logo} className="logo"></img>
+                </div>
                 <div className="eight wide column centered row">
                     <Button 
-                        className="big ui inverted button" 
+                        className="large ui inverted button" 
                         text={text} 
                         onClick={this.props.playerReady}/>
                 </div>
@@ -33,7 +37,7 @@ class Board extends React.Component {
 
     renderResults(){
 
-        const fromMe = this.props.playerName === 'Rick'  ? 'fromMe' : '';
+        const fromMe = this.props.player === 'Rick'  ? 'fromMe' : '';
 
         return(
             <div className="ui container results-wrapper">
@@ -64,19 +68,19 @@ class Board extends React.Component {
                             <Button 
                                 className="ui button control white-text" 
                                 text="-1" 
-                                onClick={ () => this.props.playTurn(this.props.current,-1,false)} 
+                                onClick={ () => this.props.playTurn(this.props.current,-1,this.props.player,false)} 
                                 disabled={!this.props.myTurn} 
                             />
                             <Button 
                                 className="ui button control white-text" 
                                 text="0" 
-                                onClick={ () => this.props.playTurn(this.props.current,0,false)} 
+                                onClick={ () => this.props.playTurn(this.props.current,0,this.props.player,false)} 
                                 disabled={!this.props.myTurn} 
                             />
                             <Button 
                                 className="ui button control white-text" 
                                 text="+1" 
-                                onClick={ () => this.props.playTurn(this.props.current,1,false)} 
+                                onClick={ () => this.props.playTurn(this.props.current,1,this.props.player,false)} 
                                 disabled={!this.props.myTurn} 
                             />
                         </div>
@@ -87,39 +91,40 @@ class Board extends React.Component {
     }
     
     render(){
-    const playersCount = this.props.players;
-    const turnmsg = this.props.isGameOver && !this.props.myTurn ? 'Game Over! You won!' 
-                    :this.props.isGameOver && this.props.myTurn ? 'Game Over! You lost :(' 
+    const playerCount = this.props.playerCount;
+    const turnmsg = this.props.isGameOver && this.props.winner === this.props.player ? 'Game Over! You won!' 
+                    :this.props.isGameOver && this.props.winner !== this.props.player ? 'Game Over! You lost :(' 
                     : this.props.isTie ? `It's a Tie!` 
                     : this.props.myTurn ? 'Your turn!' : `Your opponent's turn!`;
-    const avatar = this.props.playerName === 'Rick' ? rick
-                    : this.props.playerName === 'Morty' ? morty : '';
+    const avatar = this.props.player === 'Rick' ? rick
+                    : this.props.player === 'Morty' ? morty : '';
 
     return (
         <div className="main ui container">
-            {playersCount <= 1 && this.renderWelcome(playersCount)}
-            {playersCount >= 2 && 
+            {playerCount <= 1 && this.renderWelcome(playerCount)}
+            {playerCount >= 2 && 
                 <div>
                     <Header avatar={avatar} 
-                            name={this.props.playerName} 
+                            name={this.props.player} 
                             turnmsg={turnmsg} 
                     />
                     {this.renderResults()}
                     {this.renderControls()}
                 </div>
             }
-        </div>  
+        </div>
     );
     }
 }
 
 const mapStateToProps = state => ({ 
-    players: state.gameReducer.players,
-    playerName: state.gameReducer.playerName,
+    playerCount: state.gameReducer.playerCount,
+    player: state.gameReducer.player,
     myTurn: state.gameReducer.myTurn,
     current: state.gameReducer.current,
     results: state.gameReducer.resultHistory,
     isGameOver: state.gameReducer.isGameOver,
+    winner: state.gameReducer.winner,
     isTie: state.gameReducer.isTie
 })
 

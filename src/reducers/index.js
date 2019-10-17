@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { UPDATE_PLAYERS_LIST, NEW_GAME, PLAY_TURN, TURN_PLAYED, GAME_OVER, IS_TIE } from '../actions/types';
 
 const initialState = {
-    players: 0,
+    playerCount: 0,
     myTurn: false,
     current:null,
     resultHistory: [],
@@ -15,9 +15,9 @@ const updatePlayerList = (state, action) => {
     console.log(action)
     return {
         ...state, 
-        players: action.payload.players,
+        playerCount: action.payload.playerCount,
         playerId: action.payload.id,
-        playerName: action.payload.playerName,
+        player: action.payload.player,
         myTurn: action.payload.myTurn
     }
 }
@@ -27,13 +27,14 @@ const newGame = (state, action) => {
     return {
         ...state,
         current: action.payload.current,
-        players: action.payload.players
+        playerCount: action.payload.playerCount
     }
 }
 
 const playTurn = (state, action) => ({
     ...state,
-    current: action.payload.current
+    current: action.payload.current,
+    player: action.payload.player
 })
 
 const turnPlayed = (state, action) => {
@@ -48,13 +49,21 @@ const turnPlayed = (state, action) => {
 
 const gameOver = (state, action) => ({
     ...state,
-    isGameOver: action.payload
+    isGameOver: action.payload.isGameOver,
+    winner: action.payload.winner,
+    myTurn: false
 })
 
-const isTie = (state, action) => ({
-    ...state,
-    isTie: action.payload
-})
+const isTie = (state, action) => {
+    console.log('isTie: ',action.payload);
+    return {
+        ...state,
+        isTie: action.payload,
+        myTurn: false
+    }
+}
+
+
 
 const gameReducer = (state = initialState, action) => {
     console.log(action)

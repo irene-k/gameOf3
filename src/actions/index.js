@@ -18,17 +18,18 @@ export function startGame(payload) {
         type: NEW_GAME,
         payload: {
             current: payload.current,
-            players: payload.players,
+            playerCount: payload.playerCount
         }
     }
 };
 
-export function playTurn(current, control, myTurn) {
+export function playTurn( current, control, player, myTurn) {
     return {
         type: PLAY_TURN,
         payload: {
             current:current,
             control:control,
+            player: player,
             myTurn: myTurn
         }
     }
@@ -43,14 +44,17 @@ export function turnPlayed(payload) {
 
 export function gameOver(payload) {
     return {
-    type: GAME_OVER,
-    payload
+        type: GAME_OVER,
+        payload: {
+            isGameOver: payload.isGameover,
+            winner: payload.winner,
+        }
     }
 };
 
 export function gameIsTie(payload) {
     return {
-    type: IS_TIE,
-    payload
+        type: IS_TIE,
+        payload
     }
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import Board from './Board'
-import styles from './styles.css';
+import styles from '../components/styles.css';
 
 const App = () => {
 

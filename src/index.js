@@ -8,7 +8,7 @@ import { updatePlayersList, startGame, turnPlayed, gameOver, gameIsTie } from '.
 import reducers from './reducers';
 import 'semantic-ui-css/semantic.min.css'
 import openSocket from 'socket.io-client';
-import App from './components/App';
+import App from './containers/App';
 
 const socket = openSocket('http://localhost:8080');
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -33,13 +33,18 @@ socket.on('turnPlayed', (payload) => {
 });
 
 socket.on('gameOver', (payload) => {
-    console.log('Game is over! -> ', payload)
-    store.dispatch(gameOver(payload))
+    console.log('Game is over! -> ',
+    store.dispatch(
+        gameOver(payload)
+    ))
   });
-  
+
+
 socket.on('gameIsTie', (payload) => {
-    console.log('Its a tie! -> ', payload)
-    store.dispatch(gameIsTie(payload))
+    console.log('Its a tie! -> ',
+    store.dispatch(
+        gameIsTie(payload)
+    ))
 });
 
 const store = createStore(
