@@ -21,13 +21,13 @@ class Board extends React.Component {
     renderWelcome(nbrPlayer){
         const text = nbrPlayer === 0 ? 'Play!' : 'Waiting...';
         return(
-            <div className="ui center aligned container welcome">
+            <div className='ui center aligned container welcome'>
                 <div>
-                    <img src={logo} className="logo"></img>
+                    <img src={logo} className='logo'></img>
                 </div>
-                <div className="eight wide column centered row">
+                <div className='eight wide column centered row'>
                     <Button 
-                        className="large ui inverted button" 
+                        className='large ui inverted button' 
                         text={text} 
                         onClick={this.props.playerReady}/>
                 </div>
@@ -40,8 +40,8 @@ class Board extends React.Component {
         const fromMe = this.props.player === 'Rick'  ? 'fromMe' : '';
 
         return(
-            <div className="ui container results-wrapper">
-                <ol className="results">
+            <div className='ui container results-wrapper'>
+                <ol className='results'>
                     {this.props.results.map((item, index) => 
                         (<li key={index} 
                             className={` ${fromMe}`}>
@@ -49,7 +49,7 @@ class Board extends React.Component {
                         </li>
                         )
                     )}
-                    <li id="current" className={` ${fromMe}`}>
+                    <li id='current' className={` ${fromMe}`}>
                         {this.props.current}
                     </li>
                 </ol> 
@@ -58,28 +58,26 @@ class Board extends React.Component {
     }
 
     renderControls(){
-        const hideControls = this.props.isGameOver || this.props.isTie  ? 'hideControls' : '';
-
         return(
-            <div className="ui vertical footer segment ">
-                <div className="ui center aligned container">
-                    <div className="ui stackable grid">
-                        <div className={`eight wide column centered row ${hideControls}`}>
+            <div className='ui vertical footer segment '>
+                <div className='ui center aligned container'>
+                    <div className='ui stackable grid'>
+                        <div className={'eight wide column centered row'}>
                             <Button 
-                                className="ui button control white-text" 
-                                text="-1" 
+                                className='ui button control white-text' 
+                                text='-1' 
                                 onClick={ () => this.props.playTurn(this.props.current,-1,this.props.player,false)} 
                                 disabled={!this.props.myTurn} 
                             />
                             <Button 
-                                className="ui button control white-text" 
-                                text="0" 
+                                className='ui button control white-text' 
+                                text='0' 
                                 onClick={ () => this.props.playTurn(this.props.current,0,this.props.player,false)} 
                                 disabled={!this.props.myTurn} 
                             />
                             <Button 
-                                className="ui button control white-text" 
-                                text="+1" 
+                                className='ui button control white-text' 
+                                text='+1' 
                                 onClick={ () => this.props.playTurn(this.props.current,1,this.props.player,false)} 
                                 disabled={!this.props.myTurn} 
                             />
@@ -100,7 +98,7 @@ class Board extends React.Component {
                     : this.props.player === 'Morty' ? morty : '';
 
     return (
-        <div className="main ui container">
+        <div className='main ui container'>
             {playerCount <= 1 && this.renderWelcome(playerCount)}
             {playerCount >= 2 && 
                 <div>

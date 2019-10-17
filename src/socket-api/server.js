@@ -6,22 +6,19 @@ console.log('listening on port ', port);
 
 const clients = [];
 const addClient = client => {
-  console.log("New client connected", client.id);
+  console.log('New client connected', client.id);
   
   if (clients.indexOf(client.id) === -1)
     clients.push(client);
   client.playerCount = clients.length;
 
   if (client.playerCount % 2 === 0)
-    client.name = "Rick";
+    client.name = 'Rick';
   else
-    client.name = "Morty"; 
-
-  console.log( "Player Name: " + client.name + " , number of players: " + client.playerCount);
-  
+    client.name = 'Morty';   
 };
 const removeClient = client => {
-  console.log(client.name + " disconnected", client.id);
+  console.log(client.name + ' disconnected', client.id);
   delete clients[client.id];
   clients.pop(client);
 };
@@ -74,9 +71,9 @@ io.on('connection', (client) => {
     }
   });
   
-  client.on("disconnect", () => {
+  client.on('disconnect', () => {
     removeClient(client);
-    client.broadcast.emit("clientdisconnect", client.id);
+    client.broadcast.emit('clientdisconnect', client.id);
   });
 
 });

@@ -5,7 +5,7 @@ import styles from '../components/styles.css';
 const App = () => {
 
   return( 
-  <div className="ui container body-bg">
+  <div className='ui container body-bg'>
     <Board />
   </div>
   ); 

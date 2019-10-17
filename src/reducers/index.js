@@ -12,7 +12,6 @@ const initialState = {
 }
 
 const updatePlayerList = (state, action) => {
-    console.log(action)
     return {
         ...state, 
         playerCount: action.payload.playerCount,
@@ -23,7 +22,6 @@ const updatePlayerList = (state, action) => {
 }
 
 const newGame = (state, action) => {
-    console.log('newGame: ',action.payload);
     return {
         ...state,
         current: action.payload.current,
@@ -38,7 +36,6 @@ const playTurn = (state, action) => ({
 })
 
 const turnPlayed = (state, action) => {
-    console.log(action)
     return {
         ...state,
         current: action.payload.current,
@@ -55,7 +52,6 @@ const gameOver = (state, action) => ({
 })
 
 const isTie = (state, action) => {
-    console.log('isTie: ',action.payload);
     return {
         ...state,
         isTie: action.payload,
@@ -63,10 +59,7 @@ const isTie = (state, action) => {
     }
 }
 
-
-
 const gameReducer = (state = initialState, action) => {
-    console.log(action)
     switch (action.type) {
         case UPDATE_PLAYERS_LIST:
             return updatePlayerList(state,action);
