@@ -1,5 +1,7 @@
 ## Game of 3
 
+A two player division game.
+
 In the project directory, you can run:
 
 ### `node server.js`
