@@ -1,7 +1,6 @@
-import { PLAYER_IS_READY, PLAY_TURN } from '../actions/types';
+import { PLAYER_IS_READY, PLAY_TURN } from "../actions/types";
 
 export default socket => store => next => action => {
-  
   if (action.type && action.type === PLAYER_IS_READY) {
     socket.emit(PLAYER_IS_READY, action.type);
   }
