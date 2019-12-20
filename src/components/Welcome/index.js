@@ -1,18 +1,19 @@
 import React from "react";
 import logo from "../../assets/logo.png";
 import Button from "../Button";
-import welcome from "./welcome.css";
+import  "./welcome.css";
 
-export const Welcome = ({ text, onClick }) => (
+const Welcome = ({ isWaiting, onSetPlayerReady }) => (
+
   <div className="ui center aligned container welcome">
     <div>
-      <img src={logo} className="logo" />
+      <img src={logo} alt="logo" className="logo" />
     </div>
     <div className="eight wide column centered row">
       <Button
-        className="large ui inverted button"
-        text={text}
-        onClick={onClick}
+        className="large ui inverted button welcome-btn"
+        text={ !isWaiting ?  "Play!" : "Waiting..."}
+        onClick={onSetPlayerReady}
       />
     </div>
   </div>

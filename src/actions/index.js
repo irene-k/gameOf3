@@ -21,7 +21,8 @@ export const startGame = payload => ({
   type: NEW_GAME,
   payload: {
     current: payload.current,
-    playerCount: payload.playerCount
+    playerCount: payload.playerCount,
+    resultHistory: [payload.current]
   }
 });
 

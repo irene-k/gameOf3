@@ -1,13 +1,11 @@
 import React from "react";
-import Board from "../../containers/Board";
-import app from "./app.css";
+import "./app.css";
+import Main from "../../containers/Main";
 
-const App = () => {
-  return (
+const App = () => 
+  
     <div className="ui container body-bg">
-      <Board />
+      <Main />
     </div>
-  );
-};
 
 export default App;

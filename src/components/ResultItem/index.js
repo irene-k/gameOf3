@@ -1,8 +1,7 @@
 import React from "react";
-import resultItem from "./resultItem.css"
 
-export const ResultItem = ({ className, index, item }) => (
-    <li key={index} className={className}>
+const ResultItem = ({ className,  item }) => (
+    <li className={className}>
         {item}
     </li>
 );

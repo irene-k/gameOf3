@@ -51,8 +51,7 @@ io.on("connection", client => {
     const newNumber = parseInt((turnData.current + turnData.control) / 3);
     const data = {
       current: newNumber,
-      player: turnData.player,
-      myTurn: true
+      player: turnData.player
     };
     io.emit("turnPlayed", data);
     if (newNumber === 1) {

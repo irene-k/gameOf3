@@ -1,115 +1,117 @@
 import React from "react";
 import { connect } from "react-redux";
-import Welcome from "../components/Welcome";
 import Header from "../components/Header";
-import Controls from "../components/Controls";
 import Results from "../components/Results";
+import Controls from "../components/Controls";
 import rick from "../assets/rick.jpg";
 import morty from "../assets/morty.jpg";
 import io from "socket.io-client";
 import {
-  playerReady,
-  startGame,
-  playTurn,
-  turnPlayed,
-  gameOver,
-  gameIsTie
-} from "../actions";
+    playTurn
+  } from "../actions";
 
 class Board extends React.Component {
-  constructor(props) {
-    super(props);
-    this.socket = io("http://localhost:8080");
-  }
 
-  render() {
-    const playerCount = this.props.playerCount;
-    const welcomeBtnText = playerCount === 0 ? "Play!" : "Waiting...";
-    const turnmsg =
-      this.props.isGameOver && this.props.winner === this.props.player
-        ? "Game Over! You won!"
-        : this.props.isGameOver && this.props.winner !== this.props.player
-        ? "Game Over! You lost :("
-        : this.props.isTie
-        ? `It's a Tie!`
-        : this.props.myTurn
-        ? "Your turn!"
-        : `Your opponent's turn!`;
-    const avatar =
-      this.props.player === "Rick"
-        ? rick
-        : this.props.player === "Morty"
-        ? morty
-        : "";
-    const fromMe = this.props.player === "Rick" ? "fromMe" : "";
+    constructor(props) {
+        super(props);
+        this.socket = io("http://localhost:8080");
+      }
 
-    return (
-      <div className="main ui container">
-        {playerCount <= 1 && (
-          <Welcome text={welcomeBtnText} onClick={this.props.playerReady} />
-        )}
-        {playerCount >= 2 && (
-          <div>
+    getAvatar=() => {
+        switch (this.props.player) {
+            case "Rick" : return rick;
+            case "Morty" : return morty;
+            default : return morty;
+        }
+    }
+    
+    getGameOverMessage = () => {
+        if (this.props.isTie) {
+            return `It's a Tie!`;
+        }
+        if (this.props.winner === this.props.player){
+            return "Game Over! You won!";
+        }
+        else {
+            return "Game Over! You lost :(";
+        }
+        
+    }
+
+    getTurnMessage = () => {
+        if (this.props.myTurn) {
+            return "Your turn!"
+        }
+        else {
+            return `Your opponent's turn!`;
+        }
+    }
+
+    getResultsClass = () => {
+        return this.props.player === "Rick" ? "fromMe" : "";
+
+    }
+
+    handleOnClick = (value) => {
+      return () =>
+      this.props.playTurn(
+        this.props.current,
+        value,
+        this.props.player,
+        false
+      )
+    }
+
+    getControls = () => {
+      return (
+        [{
+          text:"-1",
+          onClick: this.handleOnClick(-1),
+        },
+        {
+          text:"0",
+          onClick: this.handleOnClick(0),
+        },
+        {
+          text:"1",
+          onClick: this.handleOnClick(1),
+        }]
+      )
+    } 
+
+
+    render(){
+        return (
+        <div>
             <Header
-              avatar={avatar}
+              avatar={this.getAvatar()}
               name={this.props.player}
-              turnmsg={turnmsg}
+              turnmsg={ !this.props.isGameOver ? this.getTurnMessage() : this.getGameOverMessage()}
             />
-            <Results
+             <Results
               resultsArray={this.props.results}
               current={this.props.current}
-              className={` ${fromMe}`}
+              className={this.getResultsClass()}
             />
-            <Controls
-              text1="-1"
-              text2="0"
-              text3="+1"
-              className="ui button control white-text"
-              onClick1={() =>
-                this.props.playTurn(
-                  this.props.current,
-                  -1,
-                  this.props.player,
-                  false
-                )
-              }
-              onClick2={() =>
-                this.props.playTurn(
-                  this.props.current,
-                  0,
-                  this.props.player,
-                  false
-                )
-              }
-              onClick3={() =>
-                this.props.playTurn(
-                  this.props.current,
-                  1,
-                  this.props.player,
-                  false
-                )
-              }
+              <Controls
+              buttons={this.getControls()}
               disabled={!this.props.myTurn}
             />
-          </div>
-        )}
-      </div>
-    );
-  }
+           
+        </div>
+        );
+    }
 }
 
 const mapStateToProps = state => ({
-  playerCount: state.gameReducer.playerCount,
-  player: state.gameReducer.player,
-  myTurn: state.gameReducer.myTurn,
-  current: state.gameReducer.current,
-  results: state.gameReducer.resultHistory,
-  isGameOver: state.gameReducer.isGameOver,
-  winner: state.gameReducer.winner,
-  isTie: state.gameReducer.isTie
-});
-
+    myTurn: state.gameReducer.myTurn,
+    player: state.gameReducer.player,
+    isGameOver: state.gameReducer.isGameOver,
+    current: state.gameReducer.current,
+    results: state.gameReducer.resultHistory,
+    winner: state.gameReducer.winner
+  });
+  
 export default connect(
-  mapStateToProps,
-  { playerReady, startGame, playTurn, turnPlayed, gameOver, gameIsTie }
+  mapStateToProps, { playTurn }
 )(Board);

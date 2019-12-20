@@ -8,57 +8,58 @@ import {
   IS_TIE
 } from "../actions/types";
 
-const initialState = {
+export const initialState = {
   playerCount: 0,
+  isGameStarted:false,
   myTurn: false,
   current: null,
   resultHistory: [],
   isGameOver: false,
   winner: null,
-  isTie: false
+  isTie: false,
 };
 
-const updatePlayerList = (state, action) => ({
+export const updatePlayerList = (state, action) => {
+  const { id, ...rest} = action.payload;
+
+return {
+    ...state,
+    ...rest,
+    playerId: id
+  }
+};
+
+export const newGame = (state, action) => ({
   ...state,
-  playerCount: action.payload.playerCount,
-  playerId: action.payload.id,
-  player: action.payload.player,
-  myTurn: action.payload.myTurn
+  ...action.payload,
+  isGameStarted: true,
+  resultHistory: [action.payload.current]
 });
 
-const newGame = (state, action) => ({
+
+export const playTurn = (state, action) => ({  
+  ...state,
+  ...action.payload
+});
+
+export const turnPlayed = (state, action) => ({
   ...state,
   current: action.payload.current,
-  playerCount: action.payload.playerCount
+  resultHistory: [...state.resultHistory, action.payload.current],
+  myTurn: action.payload.player !== state.player
 });
 
-const playTurn = (state, action) => ({
+export const gameOver = (state, action) => ({
   ...state,
-  current: action.payload.current,
-  player: action.payload.player
+  ...action.payload,
 });
 
-const turnPlayed = (state, action) => ({
+export const isTie = (state, action) => ({
   ...state,
-  current: action.payload.current,
-  resultHistory: [...state.resultHistory, state.current],
-  myTurn: !state.myTurn
+  isTie: action.payload
 });
 
-const gameOver = (state, action) => ({
-  ...state,
-  isGameOver: action.payload.isGameOver,
-  winner: action.payload.winner,
-  myTurn: false
-});
-
-const isTie = (state, action) => ({
-  ...state,
-  isTie: action.payload,
-  myTurn: false
-});
-
-const gameReducer = (state = initialState, action) => {
+export const gameReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_PLAYERS_LIST:
       return updatePlayerList(state, action);
